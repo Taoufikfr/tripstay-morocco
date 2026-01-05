@@ -6,14 +6,25 @@
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div *ngFor="let room of rooms" class="group cursor-pointer">
+    <div *ngFor="let room of rooms" 
+         [routerLink]="['/details', room.id]"
+         class="group cursor-pointer">
       
       <div class="relative overflow-hidden rounded-xl aspect-square mb-3">
         <img [src]="room.image" [alt]="room.name" 
              class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
-        <button class="absolute top-3 right-3 text-white/70 hover:text-white hover:scale-110 transition">
-          <lucide-icon [img]="HeartIcon" class="w-6 h-6 fill-black/50"></lucide-icon>
+        
+        <button (click)="toggleFavorite(room, $event)" 
+                class="absolute top-3 right-3 transition hover:scale-110">
+          <lucide-icon [img]="HeartIcon" 
+                       class="w-6 h-6 transition-colors duration-200"
+                       [class.fill-red-500]="room.isFavorite"
+                       [class.text-red-500]="room.isFavorite"
+                       [class.fill-black-50]="!room.isFavorite"
+                       [class.text-white]="!room.isFavorite">
+          </lucide-icon>
         </button>
+        
       </div>
 
       <div class="flex justify-between items-start">
